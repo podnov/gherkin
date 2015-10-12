@@ -1,0 +1,242 @@
+{
+  "prologue" : {
+    "lines" : [
+      {
+        "effectiveLineType" : "FEATURE_HEADER",
+        "lineNumber" : 1,
+        "lineType" : "FEATURE_HEADER",
+        "text" : "Feature: Do awesome"
+      },
+      {
+        "effectiveLineType" : "FEATURE_HEADER",
+        "lineNumber" : 2,
+        "lineType" : "BLANK",
+        "text" : ""
+      },
+      {
+        "effectiveLineType" : "FEATURE_DESCRIPTION",
+        "lineNumber" : 3,
+        "lineType" : "OTHER",
+        "text" : "In order to do awesome"
+      },
+      {
+        "effectiveLineType" : "FEATURE_DESCRIPTION",
+        "lineNumber" : 4,
+        "lineType" : "OTHER",
+        "text" : "As a software engineer"
+      },
+      {
+        "effectiveLineType" : "FEATURE_DESCRIPTION",
+        "lineNumber" : 5,
+        "lineType" : "OTHER",
+        "text" : "I want to be able to dev quickly"
+      },
+      {
+        "effectiveLineType" : "FEATURE_DESCRIPTION",
+        "lineNumber" : 6,
+        "lineType" : "BLANK",
+        "text" : ""
+      }
+    ]
+  },
+  "background" : {
+    "lines" : [
+      {
+        "effectiveLineType" : "BACKGROUND_HEADER",
+        "lineNumber" : 7,
+        "lineType" : "BACKGROUND_HEADER",
+        "text" : "Background:"
+      },
+      {
+        "effectiveLineType" : "GIVEN",
+        "lineNumber" : 8,
+        "lineType" : "GIVEN",
+        "text" : "\tGiven the following people exist:"
+      },
+      {
+        "effectiveLineType" : "DATA_TABLE_HEADER",
+        "lineNumber" : 9,
+        "lineType" : "DATA_TABLE",
+        "text" : "\t| id | firstName | lastName |"
+      },
+      {
+        "effectiveLineType" : "DATA_TABLE_BODY",
+        "lineNumber" : 10,
+        "lineType" : "DATA_TABLE",
+        "text" : "| 1 |    Evan    | Zeimet |"
+      },
+      {
+        "effectiveLineType" : "DATA_TABLE_BODY",
+        "lineNumber" : 11,
+        "lineType" : "DATA_TABLE",
+        "text" : "\t| 2 | John  | Boone |"
+      },
+      {
+        "effectiveLineType" : "DATA_TABLE_BODY",
+        "lineNumber" : 12,
+        "lineType" : "DATA_TABLE",
+        "text" : "\t| 3  | Tom       | Pendergast  |"
+      },
+      {
+        "effectiveLineType" : "BLANK",
+        "lineNumber" : 13,
+        "lineType" : "BLANK",
+        "text" : ""
+      },
+      {
+        "effectiveLineType" : "AND",
+        "lineNumber" : 14,
+        "lineType" : "AND",
+        "text" : "\tAnd the following offices exist:"
+      },
+      {
+        "effectiveLineType" : "DATA_TABLE_HEADER",
+        "lineNumber" : 15,
+        "lineType" : "DATA_TABLE",
+        "text" : "\t| id| name | address 1 | address 2|city| state | zip | main phone number |"
+      },
+      {
+        "effectiveLineType" : "DATA_TABLE_BODY",
+        "lineNumber" : 16,
+        "lineType" : "DATA_TABLE",
+        "text" : "  | 1 | Corporate Headquarters | 200 N. Milwaukee Ave. | | Vernon Hills | IL | 60061 | 847.465.6000 |"
+      },
+      {
+        "effectiveLineType" : "DATA_TABLE_BODY",
+        "lineNumber" : 17,
+        "lineType" : "DATA_TABLE",
+        "text" : "\t| 2 | Wisconsin - Madison | 5520 Research Park Dr | | Fitchburg | WI | 53711 | 1-(847)-465-6000 |"
+      },
+      {
+        "effectiveLineType" : "DATA_TABLE_BODY",
+        "lineNumber" : 18,
+        "lineType" : "COMMENT",
+        "text" : "\t# some data table comment"
+      },
+      {
+        "effectiveLineType" : "DATA_TABLE_BODY",
+        "lineNumber" : 19,
+        "lineType" : "DATA_TABLE",
+        "text" : "| 3 | Wisconsin - Milwaukee | N19w23993 Ridgeview | Parkway West Suite 120 | Waukesha | WI | 53188 | 262.521.5600 |"
+      },
+      {
+        "effectiveLineType" : "BLANK",
+        "lineNumber" : 20,
+        "lineType" : "BLANK",
+        "text" : ""
+      },
+      {
+        "effectiveLineType" : "BLANK",
+        "lineNumber" : 21,
+        "lineType" : "BLANK",
+        "text" : ""
+      }
+    ]
+  },
+  "scenarios" : [
+    {
+      "lines" : [
+        {
+          "effectiveLineType" : "SCENARIO_HEADER",
+          "lineNumber" : 22,
+          "lineType" : "SCENARIO_HEADER",
+          "text" : "Scenario: Search for potential offices for person 1"
+        },
+        {
+          "effectiveLineType" : "WHEN",
+          "lineNumber" : 23,
+          "lineType" : "WHEN",
+          "text" : "\tWhen I search for potential offices for \"Evan Zeimet\""
+        },
+        {
+          "effectiveLineType" : "WHEN",
+          "lineNumber" : 24,
+          "lineType" : "COMMENT",
+          "text" : "\t# I'm anding because x"
+        },
+        {
+          "effectiveLineType" : "WHEN",
+          "lineNumber" : 25,
+          "lineType" : "AND",
+          "text" : "\tAnd there's a chained When"
+        },
+        {
+          "effectiveLineType" : "THEN",
+          "lineNumber" : 26,
+          "lineType" : "THEN",
+          "text" : "\tThen I should see these offices:"
+        },
+        {
+          "effectiveLineType" : "DATA_TABLE_HEADER",
+          "lineNumber" : 27,
+          "lineType" : "DATA_TABLE",
+          "text" : "\t| id | name | address 1 | address 2|city| state | zip | main phone number     |"
+        },
+        {
+          "effectiveLineType" : "DATA_TABLE_BODY",
+          "lineNumber" : 28,
+          "lineType" : "DATA_TABLE",
+          "text" : "\t| 2  | Wisconsin - Madison   | 5520 Research Park Dr|  | Fitchburg    | WI | 53711 | 1-(847)-465-6000 |"
+        },
+        {
+          "effectiveLineType" : "DATA_TABLE_BODY",
+          "lineNumber" : 29,
+          "lineType" : "DATA_TABLE",
+          "text" : "\t| 3 | Wisconsin - Milwaukee | N19w23993 Ridgeview | Parkway West Suite 120 | Waukesha | WI | 53188 | 262.521.5600 |"
+        },
+        {
+          "effectiveLineType" : "THEN",
+          "lineNumber" : 30,
+          "lineType" : "AND",
+          "text" : "\tAnd there's a chained Then"
+        },
+        {
+          "effectiveLineType" : "THEN",
+          "lineNumber" : 31,
+          "lineType" : "BLANK",
+          "text" : ""
+        }
+      ]
+    },
+    {
+      "lines" : [
+        {
+          "effectiveLineType" : "SCENARIO_HEADER",
+          "lineNumber" : 32,
+          "lineType" : "SCENARIO_HEADER",
+          "text" : "Scenario: Search for potential offices for person 2"
+        },
+        {
+          "effectiveLineType" : "WHEN",
+          "lineNumber" : 33,
+          "lineType" : "WHEN",
+          "text" : "\tWhen I search for potential offices for \"John Boone\""
+        },
+        {
+          "effectiveLineType" : "THEN",
+          "lineNumber" : 34,
+          "lineType" : "THEN",
+          "text" : "\tThen I should see these offices:"
+        },
+        {
+          "effectiveLineType" : "DATA_TABLE_HEADER",
+          "lineNumber" : 35,
+          "lineType" : "DATA_TABLE",
+          "text" : "\t| id | name                   | address 1             | address 2 | city         | state | zip     | main phone number     |"
+        },
+        {
+          "effectiveLineType" : "DATA_TABLE_BODY",
+          "lineNumber" : 36,
+          "lineType" : "DATA_TABLE",
+          "text" : "\t| 1  | Corporate Headquarters | 200 N. Milwaukee Ave. |           | Vernon Hills | IL    | 60061   | 847.465.6000          |"
+        },
+        {
+          "effectiveLineType" : "DATA_TABLE_BODY",
+          "lineNumber" : 37,
+          "lineType" : "DATA_TABLE",
+          "text" : "\t| 2  | Wisconsin - Madison    | 5520 Research Park Dr |  | Fitchburg    | WI | 53711 | 1-(847)-465-6000                    |"
+        }
+      ]
+    }
+  ]
+}
