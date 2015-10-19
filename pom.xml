@@ -1,11 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.evanzeimet.gherkin</groupId>
     <artifactId>gherkin-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -36,6 +36,7 @@
         <version.org.apache.maven.maven-plugin-api>${version.maven-plugin}</version.org.apache.maven.maven-plugin-api>
         <version.org.apache.maven.plugin-tools.maven-plugin-annotations>3.4</version.org.apache.maven.plugin-tools.maven-plugin-annotations>
         <version.org.apache.maven.plugins.maven-compiler-plugin>3.3</version.org.apache.maven.plugins.maven-compiler-plugin>
+        <version.org.apache.maven.plugins.maven-plugin-plugin>3.4</version.org.apache.maven.plugins.maven-plugin-plugin>
         <version.org.slf4j.slf4j-api>${version.slf4j}</version.org.slf4j.slf4j-api>
         <version.org.slf4j.slf4j-log4j12>${version.slf4j}</version.org.slf4j.slf4j-log4j12>
     </properties>
@@ -148,6 +149,24 @@
                         <source>${compiler.source-version}</source>
                         <target>${compiler.target-version}</target>
                     </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.evanzeimet.gherkin</groupId>
+                    <artifactId>maven-plugin-plugin</artifactId>
+                    <version>${version.org.apache.maven.plugins.maven-plugin-plugin}</version>
+                    <configuration>
+                        <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>mojo-descriptor</id>
+                            <phase>process-classes</phase>
+                            <goals>
+                                <goal>descriptor</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
 
                 <plugin>
