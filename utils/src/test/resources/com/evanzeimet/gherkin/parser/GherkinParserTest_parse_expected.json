@@ -1,0 +1,284 @@
+{
+  "prologue" : {
+    "lines" : [
+      {
+        "effectiveLineType" : "BLANK",
+        "lineNumber" : 1,
+        "lineType" : "BLANK",
+        "text" : ""
+      },
+      {
+        "effectiveLineType" : "COMMENT",
+        "lineNumber" : 2,
+        "lineType" : "COMMENT",
+        "text" : "#first line intentionally left blank"
+      },
+      {
+        "effectiveLineType" : "FEATURE_HEADER",
+        "lineNumber" : 3,
+        "lineType" : "FEATURE_HEADER",
+        "text" : "Feature: Do awesome"
+      },
+      {
+        "effectiveLineType" : "FEATURE_DESCRIPTION",
+        "lineNumber" : 4,
+        "lineType" : "BLANK",
+        "text" : ""
+      },
+      {
+        "effectiveLineType" : "FEATURE_DESCRIPTION",
+        "lineNumber" : 5,
+        "lineType" : "OTHER",
+        "text" : "In order to do awesome"
+      },
+      {
+        "effectiveLineType" : "FEATURE_DESCRIPTION",
+        "lineNumber" : 6,
+        "lineType" : "OTHER",
+        "text" : "As a software engineer"
+      },
+      {
+        "effectiveLineType" : "FEATURE_DESCRIPTION",
+        "lineNumber" : 7,
+        "lineType" : "OTHER",
+        "text" : "I want to be able to dev quickly"
+      },
+      {
+        "effectiveLineType" : "FEATURE_DESCRIPTION",
+        "lineNumber" : 8,
+        "lineType" : "BLANK",
+        "text" : ""
+      }
+    ]
+  },
+  "background" : {
+    "lines" : [
+      {
+        "effectiveLineType" : "BACKGROUND_HEADER",
+        "lineNumber" : 9,
+        "lineType" : "BACKGROUND_HEADER",
+        "text" : "Background:"
+      },
+      {
+        "effectiveLineType" : "BLANK",
+        "lineNumber" : 10,
+        "lineType" : "BLANK",
+        "text" : ""
+      },
+      {
+        "effectiveLineType" : "GIVEN",
+        "lineNumber" : 11,
+        "lineType" : "GIVEN",
+        "text" : "\tGiven the following people exist:"
+      },
+      {
+        "effectiveLineType" : "DATA_TABLE_HEADER",
+        "lineNumber" : 12,
+        "lineType" : "DATA_TABLE",
+        "text" : "\t| id | firstName | lastName |"
+      },
+      {
+        "effectiveLineType" : "DATA_TABLE_BODY",
+        "lineNumber" : 13,
+        "lineType" : "DATA_TABLE",
+        "text" : "\t| 1 |    Evan    | Zeimet |"
+      },
+      {
+        "effectiveLineType" : "DATA_TABLE_BODY",
+        "lineNumber" : 14,
+        "lineType" : "DATA_TABLE",
+        "text" : "\t| 2 | John  | Boone |"
+      },
+      {
+        "effectiveLineType" : "DATA_TABLE_BODY",
+        "lineNumber" : 15,
+        "lineType" : "DATA_TABLE",
+        "text" : "\t| 3  | Tom       | Pendergast  |"
+      },
+      {
+        "effectiveLineType" : "BLANK",
+        "lineNumber" : 16,
+        "lineType" : "BLANK",
+        "text" : ""
+      },
+      {
+        "effectiveLineType" : "AND",
+        "lineNumber" : 17,
+        "lineType" : "AND",
+        "text" : "\tAnd the following offices exist:"
+      },
+      {
+        "effectiveLineType" : "DATA_TABLE_HEADER",
+        "lineNumber" : 18,
+        "lineType" : "DATA_TABLE",
+        "text" : "\t| id| name | address 1 | address 2|city| state | zip | main phone number |"
+      },
+      {
+        "effectiveLineType" : "DATA_TABLE_BODY",
+        "lineNumber" : 19,
+        "lineType" : "DATA_TABLE",
+        "text" : "\t| 1 | Corporate Headquarters | 200 N. Milwaukee Ave. | | Vernon Hills | IL | 60061 | 847.465.6000 |"
+      },
+      {
+        "effectiveLineType" : "DATA_TABLE_BODY",
+        "lineNumber" : 20,
+        "lineType" : "DATA_TABLE",
+        "text" : "\t| 2 | Wisconsin - Madison | 5520 Research Park Dr | | Fitchburg | WI | 53711 | 1-(847)-465-6000 |"
+      },
+      {
+        "effectiveLineType" : "DATA_TABLE_BODY",
+        "lineNumber" : 21,
+        "lineType" : "COMMENT",
+        "text" : "\t# some data table comment"
+      },
+      {
+        "effectiveLineType" : "DATA_TABLE_BODY",
+        "lineNumber" : 22,
+        "lineType" : "DATA_TABLE",
+        "text" : "\t| 3 | Wisconsin - Milwaukee | N19w23993 Ridgeview | Parkway West Suite 120 | Waukesha | WI | 53188 | 262.521.5600 |"
+      },
+      {
+        "effectiveLineType" : "BLANK",
+        "lineNumber" : 23,
+        "lineType" : "BLANK",
+        "text" : ""
+      },
+      {
+        "effectiveLineType" : "BLANK",
+        "lineNumber" : 24,
+        "lineType" : "BLANK",
+        "text" : ""
+      }
+    ]
+  },
+  "scenarios" : [
+    {
+      "lines" : [
+        {
+          "effectiveLineType" : "SCENARIO_HEADER",
+          "lineNumber" : 25,
+          "lineType" : "SCENARIO_HEADER",
+          "text" : "Scenario: Search for potential offices for person 1"
+        },
+        {
+          "effectiveLineType" : "WHEN",
+          "lineNumber" : 26,
+          "lineType" : "WHEN",
+          "text" : "\tWhen I search for potential offices for \"Evan Zeimet\""
+        },
+        {
+          "effectiveLineType" : "WHEN",
+          "lineNumber" : 27,
+          "lineType" : "COMMENT",
+          "text" : "\t# I'm anding because x"
+        },
+        {
+          "effectiveLineType" : "WHEN",
+          "lineNumber" : 28,
+          "lineType" : "AND",
+          "text" : "\tAnd there's a chained When"
+        },
+        {
+          "effectiveLineType" : "THEN",
+          "lineNumber" : 29,
+          "lineType" : "THEN",
+          "text" : "\tThen I should see these offices:"
+        },
+        {
+          "effectiveLineType" : "DATA_TABLE_HEADER",
+          "lineNumber" : 30,
+          "lineType" : "DATA_TABLE",
+          "text" : "\t| id | name | address 1 | address 2|city| state | zip | main phone number     |"
+        },
+        {
+          "effectiveLineType" : "DATA_TABLE_BODY",
+          "lineNumber" : 31,
+          "lineType" : "DATA_TABLE",
+          "text" : "\t| 2  | Wisconsin - Madison   | 5520 Research Park Dr|  | Fitchburg    | WI | 53711 | 1-(847)-465-6000 |"
+        },
+        {
+          "effectiveLineType" : "DATA_TABLE_BODY",
+          "lineNumber" : 32,
+          "lineType" : "DATA_TABLE",
+          "text" : "\t| 3 | Wisconsin - Milwaukee | N19w23993 Ridgeview | Parkway West Suite 120 | Waukesha | WI | 53188 | 262.521.5600 |"
+        },
+        {
+          "effectiveLineType" : "THEN",
+          "lineNumber" : 33,
+          "lineType" : "AND",
+          "text" : "\tAnd there's a chained Then"
+        },
+        {
+          "effectiveLineType" : "THEN",
+          "lineNumber" : 34,
+          "lineType" : "BLANK",
+          "text" : ""
+        }
+      ]
+    },
+    {
+      "lines" : [
+        {
+          "effectiveLineType" : "SCENARIO_HEADER",
+          "lineNumber" : 35,
+          "lineType" : "SCENARIO_HEADER",
+          "text" : "Scenario: Search for potential offices for person 2"
+        },
+        {
+          "effectiveLineType" : "WHEN",
+          "lineNumber" : 36,
+          "lineType" : "WHEN",
+          "text" : "\tWhen I search for potential offices for \"John Boone\""
+        },
+        {
+          "effectiveLineType" : "THEN",
+          "lineNumber" : 37,
+          "lineType" : "THEN",
+          "text" : "\tThen I should see these offices:"
+        },
+        {
+          "effectiveLineType" : "DATA_TABLE_HEADER",
+          "lineNumber" : 38,
+          "lineType" : "DATA_TABLE",
+          "text" : "\t| id | name                   | address 1             | address 2 | city         | state | zip     | main phone number     |"
+        },
+        {
+          "effectiveLineType" : "DATA_TABLE_BODY",
+          "lineNumber" : 39,
+          "lineType" : "DATA_TABLE",
+          "text" : "\t| 1  | Corporate Headquarters | 200 N. Milwaukee Ave. |           | Vernon Hills | IL    | 60061   | 847.465.6000          |"
+        },
+        {
+          "effectiveLineType" : "DATA_TABLE_BODY",
+          "lineNumber" : 40,
+          "lineType" : "DATA_TABLE",
+          "text" : "\t| 2  | Wisconsin - Madison    | 5520 Research Park Dr |  | Fitchburg    | WI | 53711 | 1-(847)-465-6000                    |"
+        },
+        {
+          "effectiveLineType" : "BLANK",
+          "lineNumber" : 41,
+          "lineType" : "BLANK",
+          "text" : ""
+        },
+        {
+          "effectiveLineType" : "AND",
+          "lineNumber" : 42,
+          "lineType" : "AND",
+          "text" : "\tAnd there's some other table:"
+        },
+        {
+          "effectiveLineType" : "DATA_TABLE_HEADER",
+          "lineNumber" : 43,
+          "lineType" : "DATA_TABLE",
+          "text" : "\t| other column 1 | other column 2 |"
+        },
+        {
+          "effectiveLineType" : "DATA_TABLE_BODY",
+          "lineNumber" : 44,
+          "lineType" : "DATA_TABLE",
+          "text" : "\t| other value 1  | other value 2  |"
+        }
+      ]
+    }
+  ]
+}
