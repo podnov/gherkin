@@ -1,0 +1,14 @@
+---
+
+language: java
+
+notifications:
+  email:
+    recipients:
+      - podnov@gmail.com
+    on_success: change
+    on_failure: always
+
+install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dcargo.skip=true -B -V
+
+script: mvn verify -Ptravis
