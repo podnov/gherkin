@@ -9,8 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.evanzeimet.gherkin.GherkinTestUtils;
-import com.evanzeimet.gherkin.formatter.GherkinFileFormatter;
-import com.evanzeimet.gherkin.formatter.GherkinFormatterException;
 import com.evanzeimet.gherkin.parser.GherkinParserException;
 
 public class GherkinFileFormatterTest {
@@ -20,6 +18,54 @@ public class GherkinFileFormatterTest {
     @Before
     public void setUp() {
         formatter = new GherkinFileFormatter();
+    }
+
+    @Test
+    public void chooseLineSeparator_auto() {
+        GherkinFormatterLineSeparator givenLineSeparator = GherkinFormatterLineSeparator.AUTO;
+
+        formatter.setLineSeparator(givenLineSeparator);
+
+        String actual = formatter.chooseLineSeparator();
+        String expected = String.format("%n");
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void chooseLineSeparator_null() {
+        GherkinFormatterLineSeparator givenLineSeparator = null;
+
+        formatter.setLineSeparator(givenLineSeparator);
+
+        String actual = formatter.chooseLineSeparator();
+        String expected = String.format("%n");
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void chooseLineSeparator_unix() {
+        GherkinFormatterLineSeparator givenLineSeparator = GherkinFormatterLineSeparator.UNIX;
+
+        formatter.setLineSeparator(givenLineSeparator);
+
+        String actual = formatter.chooseLineSeparator();
+        String expected = "\n";
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void chooseLineSeparator_windows() {
+        GherkinFormatterLineSeparator givenLineSeparator = GherkinFormatterLineSeparator.WINDOWS;
+
+        formatter.setLineSeparator(givenLineSeparator);
+
+        String actual = formatter.chooseLineSeparator();
+        String expected = "\r\n";
+
+        assertEquals(expected, actual);
     }
 
     @Test

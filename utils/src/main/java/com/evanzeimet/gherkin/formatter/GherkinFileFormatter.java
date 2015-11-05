@@ -18,7 +18,53 @@ import com.evanzeimet.gherkin.parser.structure.GherkinScenario;
 
 public class GherkinFileFormatter {
 
-    private static final String LINE_SEPERATOR = String.format("%n");
+    protected static final String AUTO_LINE_SEPARATOR = String.format("%n");
+    protected static final String CRLF = "\r\n";
+    protected static final String LF = "\n";
+
+    private GherkinFormatterLineSeparator lineSeparator = GherkinFormatterLineSeparator.AUTO;
+
+    public GherkinFileFormatter() {
+
+    }
+
+    public GherkinFormatterLineSeparator getLineSeparator() {
+        return lineSeparator;
+    }
+
+    public void setLineSeparator(GherkinFormatterLineSeparator lineSeparator) {
+        this.lineSeparator = lineSeparator;
+    }
+
+    protected String chooseLineSeparator() {
+        String result = AUTO_LINE_SEPARATOR;
+
+        if (lineSeparator == null) {
+            lineSeparator = GherkinFormatterLineSeparator.AUTO;
+        }
+
+        switch (lineSeparator) {
+            case AUTO:
+                result = AUTO_LINE_SEPARATOR;
+                break;
+
+            case UNIX:
+                result = LF;
+                break;
+
+            case WINDOWS:
+                result = CRLF;
+                break;
+        }
+
+        return result;
+    }
+
+    protected String createFeatureFileContents(GherkinFeature feature) {
+        List<String> lines = getFeatureLines(feature);
+        String lineSeparator = chooseLineSeparator();
+        return StringUtils.join(lines, lineSeparator);
+    }
 
     public void formatFile(File input) throws GherkinFormatterException {
         formatFile(input, input);
@@ -121,9 +167,7 @@ public class GherkinFileFormatter {
     }
 
     protected void writeFeature(GherkinFeature feature, File outputFile) throws GherkinFormatterException {
-        List<String> lines = getFeatureLines(feature);
-
-        String fileContents = StringUtils.join(lines, LINE_SEPERATOR);
+        String fileContents = createFeatureFileContents(feature);
 
         try {
             FileUtils.write(outputFile, fileContents);
