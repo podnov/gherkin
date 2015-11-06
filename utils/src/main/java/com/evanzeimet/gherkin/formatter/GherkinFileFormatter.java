@@ -66,6 +66,11 @@ public class GherkinFileFormatter {
         return StringUtils.join(lines, lineSeparator);
     }
 
+    protected boolean diffOutputTarget(String newContents, File outputFile) throws GherkinFormatterException {
+        String currentContents = readFile(outputFile);
+        return !newContents.equals(currentContents);
+    }
+
     public void formatFile(File input) throws GherkinFormatterException {
         formatFile(input, input);
     }
@@ -169,12 +174,16 @@ public class GherkinFileFormatter {
     protected void writeFeature(GherkinFeature feature, File outputFile) throws GherkinFormatterException {
         String fileContents = createFeatureFileContents(feature);
 
-        try {
-            FileUtils.write(outputFile, fileContents);
-        } catch (IOException e) {
-            String filePath = outputFile.getAbsolutePath();
-            String message = String.format("Could not write feature to [%s]", filePath);
-            throw new GherkinFormatterException(message, e);
+        boolean contentsChanged = diffOutputTarget(fileContents, outputFile);
+
+        if (contentsChanged) {
+            try {
+                FileUtils.write(outputFile, fileContents);
+            } catch (IOException e) {
+                String filePath = outputFile.getAbsolutePath();
+                String message = String.format("Could not write feature to [%s]", filePath);
+                throw new GherkinFormatterException(message, e);
+            }
         }
     }
 }
