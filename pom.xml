@@ -162,7 +162,7 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>com.evanzeimet.gherkin</groupId>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
                     <version>${version.org.apache.maven.plugins.maven-plugin-plugin}</version>
                     <configuration>
