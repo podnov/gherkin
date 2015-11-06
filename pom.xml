@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -29,7 +30,7 @@
         <version.commons-io.commons-io>2.4</version.commons-io.commons-io>
         <version.info.cukes.cucumber-java>${version.cucumber-jvm}</version.info.cukes.cucumber-java>
         <version.info.cukes.cucumber-junit>${version.cucumber-jvm}</version.info.cukes.cucumber-junit>
-        <version.org.hamcres.hamcrest-all>1.3</version.org.hamcres.hamcrest-all>
+        <version.org.hamcrest.hamcrest-all>1.3</version.org.hamcrest.hamcrest-all>
         <version.junit.junit>4.12</version.junit.junit>
         <version.org.apache.commons.commons-lang3>3.4</version.org.apache.commons.commons-lang3>
         <version.org.apache.maven.maven-model>${version.maven-plugin}</version.org.apache.maven.maven-model>
@@ -37,6 +38,7 @@
         <version.org.apache.maven.plugin-tools.maven-plugin-annotations>3.4</version.org.apache.maven.plugin-tools.maven-plugin-annotations>
         <version.org.apache.maven.plugins.maven-compiler-plugin>3.3</version.org.apache.maven.plugins.maven-compiler-plugin>
         <version.org.apache.maven.plugins.maven-plugin-plugin>3.4</version.org.apache.maven.plugins.maven-plugin-plugin>
+        <version.org.mockito.mockito-all>1.10.19</version.org.mockito.mockito-all>
         <version.org.slf4j.slf4j-api>${version.slf4j}</version.org.slf4j.slf4j-api>
         <version.org.slf4j.slf4j-log4j12>${version.slf4j}</version.org.slf4j.slf4j-log4j12>
     </properties>
@@ -121,7 +123,15 @@
             <dependency>
                 <groupId>org.hamcrest</groupId>
                 <artifactId>hamcrest-all</artifactId>
-                <version>${version.org.hamcres.hamcrest-all}</version>
+                <version>${version.org.hamcrest.hamcrest-all}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>${version.org.mockito.mockito-all}</version>
+                <scope>test</scope>
             </dependency>
 
             <dependency>

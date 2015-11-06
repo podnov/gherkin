@@ -17,15 +17,21 @@ import org.apache.maven.plugins.annotations.Parameter;
 
 import com.evanzeimet.gherkin.formatter.GherkinFileFormatter;
 import com.evanzeimet.gherkin.formatter.GherkinFormatterException;
+import com.evanzeimet.gherkin.formatter.GherkinFormatterLineSeparator;
 
 @Mojo(name = "format-features")
 public class FormatFeaturesMojo extends AbstractMojo {
+
+    private static final String DEFAULT_LINE_SEPARATOR = "AUTO";
 
     @Parameter(defaultValue = "${project.build.testResources}")
     private List<Resource> featureResources;
 
     @Parameter(defaultValue = "*.feature")
     private String filenameWildcard;
+
+    @Parameter(defaultValue = DEFAULT_LINE_SEPARATOR)
+    private final GherkinFormatterLineSeparator lineSeparator = GherkinFormatterLineSeparator.valueOf(DEFAULT_LINE_SEPARATOR);
 
     @Override
     public void execute() throws MojoExecutionException,
@@ -43,6 +49,8 @@ public class FormatFeaturesMojo extends AbstractMojo {
 
     protected void formatFiles(List<File> files) throws MojoExecutionException {
         GherkinFileFormatter fileFormatter = new GherkinFileFormatter();
+
+        fileFormatter.setLineSeparator(lineSeparator);
 
         for (File file : files) {
             try {
