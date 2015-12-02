@@ -17,7 +17,7 @@ import com.google.common.collect.ArrayListMultimap;
 
 public class GherkinFormatter {
 
-    protected static final Pattern uniqueHeaderWhitespacePrefix = Pattern.compile("^(\\s*)\\|.*");
+    protected static final Pattern dataTableRowWhitespacePrefix = Pattern.compile("^(\\s*)\\|.*");
 
     protected GherkinDataTableRow createDataTableRow(GherkinLine gherkinLine) {
         String text = gherkinLine.getText().trim();
@@ -47,16 +47,11 @@ public class GherkinFormatter {
     public void format(GherkinFeature feature) {
         ArrayListMultimap<GherkinDataTableRow /* header */, GherkinDataTableRow /* body rows */> allDataTableHeaderRowsMap = ArrayListMultimap.create();
 
-        GherkinBackground background = feature.getBackground();
-        List<GherkinLine> lines = background.getLines();
+        ArrayListMultimap<GherkinDataTableRow, GherkinDataTableRow> backgroundDataTableHeaderRowsMap = mapBackgroundDataTableRowsToTheirHeaders(feature);
+        allDataTableHeaderRowsMap.putAll(backgroundDataTableHeaderRowsMap);
 
-        ArrayListMultimap<GherkinDataTableRow /* header */, GherkinDataTableRow /* body rows */> currentDataTableHeaderRowsMap = mapDataTableRowsToHeaders(lines);
-        allDataTableHeaderRowsMap.putAll(currentDataTableHeaderRowsMap);
-
-        List<GherkinScenario> scenarios = feature.getScenarios();
-
-        currentDataTableHeaderRowsMap = mapScenarioDataTableRowsToHeaders(scenarios);
-        allDataTableHeaderRowsMap.putAll(currentDataTableHeaderRowsMap);
+        ArrayListMultimap<GherkinDataTableRow, GherkinDataTableRow> scenarioDataTableHeaderRowsMap = mapScenarioDataTableRowsToTheirHeaders(feature);
+        allDataTableHeaderRowsMap.putAll(scenarioDataTableHeaderRowsMap);
 
         formatColumns(allDataTableHeaderRowsMap);
     }
@@ -68,59 +63,70 @@ public class GherkinFormatter {
             GherkinDataTableRow uniqueHeader = uniqueHeaders.next();
             List<GherkinDataTableRow> rows = allDataTableHeaderRowsMap.get(uniqueHeader);
 
-            formatColumnsForHeader(uniqueHeader, rows);
-            formatRowsForHeaderAndColumns(uniqueHeader, rows);
+            formatRowColumnWidths(uniqueHeader, rows);
+            formatRowText(uniqueHeader, rows);
         }
     }
 
-    protected void formatColumnsForHeader(GherkinDataTableRow uniqueHeader,
+    protected void formatRowColumnWidths(GherkinDataTableRow uniqueHeader,
             List<GherkinDataTableRow> rows) {
         int columnCount = uniqueHeader.getColumns().size();
 
         for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
-            int maxLength = 0;
-
-            for (GherkinDataTableRow row : rows) {
-                String columnValue = row.getColumns().get(columnIndex);
-                int columnValueLength = columnValue.length();
-                maxLength = Math.max(maxLength, columnValueLength);
-            }
-
-            for (GherkinDataTableRow row : rows) {
-                List<String> rowColumns = row.getColumns();
-
-                String columnValue = rowColumns.get(columnIndex);
-                columnValue = StringUtils.rightPad(columnValue, maxLength, " ");
-
-                rowColumns.set(columnIndex, columnValue);
-            }
+            int maxLength = getColumnMaxWidth(rows, columnIndex);
+            setColumnWidths(rows, columnIndex, maxLength);
         }
     }
 
-    protected void formatRowsForHeaderAndColumns(GherkinDataTableRow uniqueHeader,
+    protected void formatRowText(GherkinDataTableRow uniqueHeader,
             List<GherkinDataTableRow> rows) {
-        String uniqueHeaderText = uniqueHeader.getLine().getText();
-        Matcher matcher = uniqueHeaderWhitespacePrefix.matcher(uniqueHeaderText);
-        String prefix;
-        
-        if (matcher.matches()) {
-            prefix = matcher.group(1);
-        } else {
-            prefix = "";
-        }
+        String prefix = getDataTableRowPrefix(uniqueHeader);
 
         for (GherkinDataTableRow row : rows) {
             List<String> rowColumns = row.getColumns();
             GherkinLine rowGherkinLine = row.getLine();
 
-            String newLineText = StringUtils.join(rowColumns, " | ");
-            newLineText = String.format("%s| %s |", prefix, newLineText);
+            String joinedColumns = StringUtils.join(rowColumns, " | ");
+            String joinedColumnsWithPrefix = String.format("%s| %s |", prefix, joinedColumns);
 
-            rowGherkinLine.setText(newLineText);
+            rowGherkinLine.setText(joinedColumnsWithPrefix);
         }
     }
 
-    protected ArrayListMultimap<GherkinDataTableRow, GherkinDataTableRow> mapDataTableRowsToHeaders(List<GherkinLine> lines) {
+    protected int getColumnMaxWidth(List<GherkinDataTableRow> rows, int columnIndex) {
+        int result = 0;
+
+        for (GherkinDataTableRow row : rows) {
+            String columnValue = row.getColumns().get(columnIndex);
+            int columnValueLength = columnValue.length();
+            result = Math.max(result, columnValueLength);
+        }
+
+        return result;
+    }
+
+    protected String getDataTableRowPrefix(GherkinDataTableRow row) {
+        String rowText = row.getLine().getText();
+        Matcher matcher = dataTableRowWhitespacePrefix.matcher(rowText);
+        String result;
+        
+        if (matcher.matches()) {
+            result = matcher.group(1);
+        } else {
+            result = "";
+        }
+
+        return result;
+    }
+
+    protected ArrayListMultimap<GherkinDataTableRow, GherkinDataTableRow> mapBackgroundDataTableRowsToTheirHeaders(GherkinFeature feature) {
+        GherkinBackground background = feature.getBackground();
+        List<GherkinLine> backgroundLines = background.getLines();
+
+        return mapDataTableRowsToTheirHeaders(backgroundLines);
+    }
+
+    protected ArrayListMultimap<GherkinDataTableRow, GherkinDataTableRow> mapDataTableRowsToTheirHeaders(List<GherkinLine> lines) {
         ArrayListMultimap<GherkinDataTableRow /* header */, GherkinDataTableRow /* body rows */> result = ArrayListMultimap.create();
 
         if (lines != null) {
@@ -129,14 +135,20 @@ public class GherkinFormatter {
             for (GherkinLine line : lines) {
                 GherkinLineType lineType = line.getLineType();
 
-                boolean isNotComment = !GherkinLineType.COMMENT.equals(lineType);
+                boolean isComment = GherkinLineType.COMMENT.equals(lineType);
 
-                if (isNotComment) {
-                    if (GherkinLineType.isDataTable(lineType)) {
+                boolean lineAffectsDataTableFlow = (!isComment);
+
+                if (lineAffectsDataTableFlow) {
+                    boolean lineIsDataTablePart = GherkinLineType.isDataTable(lineType);
+
+                    if (lineIsDataTablePart) {
                         GherkinDataTableRow currentRow = createDataTableRow(line);
                         GherkinLineType effectiveLineType = line.getEffectiveLineType();
 
-                        if (GherkinLineType.DATA_TABLE_HEADER.equals(effectiveLineType)) {
+                        boolean lineIsDataTableHeader = GherkinLineType.DATA_TABLE_HEADER.equals(effectiveLineType);
+
+                        if (lineIsDataTableHeader) {
                             currentDataTableHeader = currentRow;
                         }
 
@@ -151,19 +163,35 @@ public class GherkinFormatter {
         return result;
     }
 
-    protected ArrayListMultimap<GherkinDataTableRow, GherkinDataTableRow> mapScenarioDataTableRowsToHeaders(List<GherkinScenario> scenarios) {
+    protected ArrayListMultimap<GherkinDataTableRow, GherkinDataTableRow> mapScenarioDataTableRowsToTheirHeaders(GherkinFeature feature) {
+        List<GherkinScenario> scenarios = feature.getScenarios();
+        return mapScenarioDataTableRowsToTheirHeaders(scenarios);
+    }
+
+    protected ArrayListMultimap<GherkinDataTableRow, GherkinDataTableRow> mapScenarioDataTableRowsToTheirHeaders(List<GherkinScenario> scenarios) {
         ArrayListMultimap<GherkinDataTableRow /* header */, GherkinDataTableRow /* body rows */> result = ArrayListMultimap.create();
 
         if (scenarios != null) {
             for (GherkinScenario scenario : scenarios) {
                 List<GherkinLine> lines = scenario.getLines();
 
-                ArrayListMultimap<GherkinDataTableRow, GherkinDataTableRow> dataTableHeaderRowsMap = mapDataTableRowsToHeaders(lines);
+                ArrayListMultimap<GherkinDataTableRow, GherkinDataTableRow> dataTableHeaderRowsMap = mapDataTableRowsToTheirHeaders(lines);
 
                 result.putAll(dataTableHeaderRowsMap);
             }
         }
 
         return result;
+    }
+
+    protected void setColumnWidths(List<GherkinDataTableRow> rows, int columnIndex, int maxLength) {
+        for (GherkinDataTableRow row : rows) {
+            List<String> rowColumns = row.getColumns();
+
+            String columnValue = rowColumns.get(columnIndex);
+            columnValue = StringUtils.rightPad(columnValue, maxLength, " ");
+
+            rowColumns.set(columnIndex, columnValue);
+        }
     }
 }
