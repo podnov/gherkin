@@ -97,9 +97,14 @@ public class GherkinFormatter {
         int result = 0;
 
         for (GherkinDataTableRow row : rows) {
-            String columnValue = row.getColumns().get(columnIndex);
-            int columnValueLength = columnValue.length();
-            result = Math.max(result, columnValueLength);
+            List<String> columns = row.getColumns();
+
+            if (columns.size() > columnIndex) {
+                String columnValue = columns.get(columnIndex);
+                int columnValueLength = columnValue.length();
+
+                result = Math.max(result, columnValueLength);
+            }
         }
 
         return result;
@@ -186,12 +191,14 @@ public class GherkinFormatter {
 
     protected void setColumnWidths(List<GherkinDataTableRow> rows, int columnIndex, int maxLength) {
         for (GherkinDataTableRow row : rows) {
-            List<String> rowColumns = row.getColumns();
+            List<String> columns = row.getColumns();
 
-            String columnValue = rowColumns.get(columnIndex);
-            columnValue = StringUtils.rightPad(columnValue, maxLength, " ");
+            if (columns.size() > columnIndex) {
+                String columnValue = columns.get(columnIndex);
+                columnValue = StringUtils.rightPad(columnValue, maxLength, " ");
 
-            rowColumns.set(columnIndex, columnValue);
+                columns.set(columnIndex, columnValue);
+            }
         }
     }
 }
