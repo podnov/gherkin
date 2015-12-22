@@ -11,8 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.evanzeimet.gherkin.GherkinTestUtils;
-import com.evanzeimet.gherkin.formatter.GherkinDataTableRow;
-import com.evanzeimet.gherkin.formatter.GherkinFormatter;
 import com.evanzeimet.gherkin.parser.structure.GherkinFeature;
 import com.evanzeimet.gherkin.parser.structure.GherkinLine;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -28,7 +26,7 @@ public class GherkinFormatterTest {
     }
 
     @Test
-    public void createDataTableHeader_leadingSpaces() {
+    public void createDataTableRow_leadingSpaces() {
         String stringLine = "   | column 1 | column2 | column3 | column 4 |";
 
         GherkinLine gherkinLine = new GherkinLine();
@@ -42,7 +40,7 @@ public class GherkinFormatterTest {
     }
 
     @Test
-    public void createDataTableHeader_multipleColumnsColumn() {
+    public void createDataTableRow_multipleColumnsColumn() {
         String stringLine = "   | column 1 | column2 | column3    |    column 4 |   ";
 
         GherkinLine gherkinLine = new GherkinLine();
@@ -56,7 +54,7 @@ public class GherkinFormatterTest {
     }
 
     @Test
-    public void createDataTableHeader_oneColumn() {
+    public void createDataTableRow_oneColumn() {
         String stringLine = "| column1 |";
 
         GherkinLine gherkinLine = new GherkinLine();
@@ -70,7 +68,7 @@ public class GherkinFormatterTest {
     }
 
     @Test
-    public void createDataTableHeader_trailingSpaces() {
+    public void createDataTableRow_trailingSpaces() {
         String stringLine = "| column 1 | column2 | column3 | column 4 |   ";
 
         GherkinLine gherkinLine = new GherkinLine();
@@ -81,6 +79,21 @@ public class GherkinFormatterTest {
         List<String> actualColumns = actualDataTableHeader.getColumns();
 
         assertThat(actualColumns, contains("column 1", "column2", "column3", "column 4"));
+    }
+
+    @Test
+    public void createDataTableRow_escapedPipe() {
+        String stringLine = "| column 1 | column 2 \\| with pipe in content | column3 | column 4 |   ";
+
+        GherkinLine gherkinLine = new GherkinLine();
+        gherkinLine.setText(stringLine);
+
+        GherkinDataTableRow actualDataTableHeader = formatter.createDataTableRow(gherkinLine);
+
+        List<String> actualColumns = actualDataTableHeader.getColumns();
+
+        assertThat(actualColumns,
+                contains("column 1", "column 2 \\| with pipe in content", "column3", "column 4"));
     }
 
     @Test
