@@ -17,11 +17,19 @@ import com.google.common.collect.ArrayListMultimap;
 
 public class GherkinFormatter {
 
-    protected static final Pattern dataTableRowWhitespacePrefix = Pattern.compile("^(\\s*)\\|.*");
+    protected static final String DATA_TABLE_COLUMN_SPLIT_REGEX = "(?<!" // negative lookbehind
+            + "\\\\" // for escape character
+            + ")" // close negative lookbehind
+            + "\\|"; // column delimiter
+    private static final String DATA_TABLE_ROW_WHITESPACE_PREFIX_REGEX = "^" // line start
+            + "(\\s*)" // capture all leading whitespace
+            + "\\|" // column delimiter
+            + ".*"; // everything else
+    protected static final Pattern dataTableRowWhitespacePrefixPattern = Pattern.compile(DATA_TABLE_ROW_WHITESPACE_PREFIX_REGEX);
 
     protected GherkinDataTableRow createDataTableRow(GherkinLine gherkinLine) {
         String text = gherkinLine.getText().trim();
-        String[] splits = text.split("\\|");
+        String[] splits = text.split(DATA_TABLE_COLUMN_SPLIT_REGEX);
 
         int splitCount = splits.length;
         // there will always be an blank split before the first pipe
@@ -112,7 +120,7 @@ public class GherkinFormatter {
 
     protected String getDataTableRowPrefix(GherkinDataTableRow row) {
         String rowText = row.getLine().getText();
-        Matcher matcher = dataTableRowWhitespacePrefix.matcher(rowText);
+        Matcher matcher = dataTableRowWhitespacePrefixPattern.matcher(rowText);
         String result;
         
         if (matcher.matches()) {
