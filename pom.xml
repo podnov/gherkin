@@ -52,6 +52,14 @@
 
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>gherkin-utils</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>gherkin-formatter-maven-plugin</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -158,6 +166,18 @@
                         <source>${compiler.source-version}</source>
                         <target>${compiler.target-version}</target>
                     </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>test-jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
 
                 <plugin>

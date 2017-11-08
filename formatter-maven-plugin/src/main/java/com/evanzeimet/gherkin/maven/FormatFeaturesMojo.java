@@ -2,6 +2,7 @@ package com.evanzeimet.gherkin.maven;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,14 +21,17 @@ import com.evanzeimet.gherkin.formatter.GherkinFormatterException;
 import com.evanzeimet.gherkin.formatter.GherkinFormatterLineSeparator;
 
 @Mojo(name = "format-features")
-public class FormatFeaturesMojo extends AbstractMojo {
+public class FormatFeaturesMojo
+        extends AbstractMojo {
 
-    private static final String DEFAULT_LINE_SEPARATOR = "AUTO";
+    protected static final String DEFAULT_FEATURE_RESOURCES = "${project.build.testResources}";
+    protected static final String DEFAULT_FILENAME_WILDCARD = "*.feature";
+    protected static final String DEFAULT_LINE_SEPARATOR = "AUTO";
 
-    @Parameter(defaultValue = "${project.build.testResources}")
+    @Parameter(defaultValue = DEFAULT_FEATURE_RESOURCES)
     private List<Resource> featureResources;
 
-    @Parameter(defaultValue = "*.feature")
+    @Parameter(defaultValue = DEFAULT_FILENAME_WILDCARD)
     private String filenameWildcard;
 
     @Parameter(defaultValue = DEFAULT_LINE_SEPARATOR)
@@ -65,18 +69,27 @@ public class FormatFeaturesMojo extends AbstractMojo {
 
     protected List<File> getResourceFeatureFiles(Resource featureResource,
             WildcardFileFilter fileFilter) {
-        List<File> result = new ArrayList<File>();
+        List<File> result;
 
         String directoryPath = featureResource.getDirectory();
         File directory = new File(directoryPath);
 
-        Iterator<File> files = FileUtils.iterateFiles(directory,
-                fileFilter,
-                TrueFileFilter.INSTANCE);
+        if (directory.isDirectory()) {
+            result = new ArrayList<File>();
 
-        while (files.hasNext()) {
-            File file = files.next();
-            result.add(file);
+            Iterator<File> files = FileUtils.iterateFiles(directory,
+                    fileFilter,
+                    TrueFileFilter.INSTANCE);
+
+            while (files.hasNext()) {
+                File file = files.next();
+                result.add(file);
+            }
+        } else {
+            String message = String.format("Resource path [%s] is not a directory", directoryPath);
+            getLog().info(message);
+
+            result = Collections.emptyList();
         }
 
         return result;
