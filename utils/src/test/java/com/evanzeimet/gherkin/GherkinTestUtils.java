@@ -1,5 +1,7 @@
 package com.evanzeimet.gherkin;
 
+import static com.fasterxml.jackson.core.util.DefaultIndenter.SYSTEM_LINEFEED_INSTANCE;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -19,12 +21,11 @@ public class GherkinTestUtils {
         return new ObjectMapper();
     }
 
-    @SuppressWarnings("deprecation")
     public static ObjectWriter createObjectWriter() {
         ObjectMapper objectMapper = createObjectMapper();
 
         DefaultPrettyPrinter prettyPrinter = new DefaultPrettyPrinter();
-        prettyPrinter.indentArraysWith(new DefaultPrettyPrinter.Lf2SpacesIndenter());
+		prettyPrinter.indentArraysWith(SYSTEM_LINEFEED_INSTANCE);
 
         return objectMapper.writer(prettyPrinter);
     }
