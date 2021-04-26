@@ -26,7 +26,7 @@
 
         <version.com.fasterxml.jackson>2.10.0.pr1</version.com.fasterxml.jackson>
         <version.com.google.guava.guava>29.0-jre</version.com.google.guava.guava>
-        <version.commons-io.commons-io>2.4</version.commons-io.commons-io>
+        <version.commons-io.commons-io>2.7</version.commons-io.commons-io>
         <version.info.cukes.cucumber-java>${version.cucumber-jvm}</version.info.cukes.cucumber-java>
         <version.info.cukes.cucumber-junit>${version.cucumber-jvm}</version.info.cukes.cucumber-junit>
         <version.org.hamcrest.hamcrest-all>1.3</version.org.hamcrest.hamcrest-all>
