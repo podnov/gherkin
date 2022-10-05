@@ -24,7 +24,7 @@
         <version.maven-plugin>2.0</version.maven-plugin>
         <version.slf4j>1.7.12</version.slf4j>
 
-        <version.com.fasterxml.jackson>2.10.0.pr1</version.com.fasterxml.jackson>
+        <version.com.fasterxml.jackson>2.12.6.1</version.com.fasterxml.jackson>
         <version.com.google.guava.guava>29.0-jre</version.com.google.guava.guava>
         <version.commons-io.commons-io>2.7</version.commons-io.commons-io>
         <version.info.cukes.cucumber-java>${version.cucumber-jvm}</version.info.cukes.cucumber-java>
